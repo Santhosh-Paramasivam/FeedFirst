@@ -1,11 +1,16 @@
 import customtkinter
 from PIL import Image
 from datetime import date,datetime
-from common_classes import Error, FrameLeave
+
+from utils.frame_leave import FrameLeave
+from utils.error_window import Error
+
 import mysql.connector
 
 import os
 from dotenv import load_dotenv
+
+import constants.colour_constants as cc
 
 # LOADING ENVIRONMENT VARIABLES
 
@@ -21,11 +26,6 @@ mydb = mysql.connector.connect(
 )
 
 mycursor = mydb.cursor()
-
-# COLOUR CONSTANTS ###############
-
-darkPurple = '#0C1765'
-lightPurple = '#505FC8'
 
 ### FUNCTIONS ###########################
 
@@ -69,7 +69,7 @@ class VoucherRecord(customtkinter.CTkFrame):
         priorityLabel = customtkinter.CTkLabel(self, width = 146, height = 38, fg_color='white', text = priority, anchor='w')
         priorityLabel.place(x = 472, y = 4)  
 
-        viewButton = customtkinter.CTkButton(self, width = 125, height = 38, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='View', hover_color=lightPurple, command = self.view)
+        viewButton = customtkinter.CTkButton(self, width = 125, height = 38, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='View', hover_color=cc.lightPurple, command = self.view)
         viewButton.place(x = 641, y = 4)
 
     def view(self):
@@ -115,7 +115,7 @@ class LogIn(customtkinter.CTkFrame):
         self.passwordField = customtkinter.CTkEntry(self, width=241, height=39, corner_radius=15, fg_color='white', border_width=1, border_color='gray', bg_color='white')
         self.passwordField.place(x=406, y=460)
 
-        logInButton = customtkinter.CTkButton(self, fg_color=darkPurple, text='Log In', width=120, height=42, text_color='white', corner_radius=20, bg_color='white', hover_color=lightPurple, command = self.pantryInventory)
+        logInButton = customtkinter.CTkButton(self, fg_color=cc.darkPurple, text='Log In', width=120, height=42, text_color='white', corner_radius=20, bg_color='white', hover_color=cc.lightPurple, command = self.pantryInventory)
         logInButton.place(x=388, y=544)
 
     def setBackground(self):
@@ -176,19 +176,19 @@ class PantryInventory(customtkinter.CTkFrame):
         global USERNAME
         global PANTRY_ID
 
-        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Exit', hover_color=lightPurple)
+        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple)
         exitButton.place(x = 695, y = 588)
 
-        verifyRecepientsButton = customtkinter.CTkButton(self, width = 138, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Verify Users', hover_color=lightPurple, command = self.validateRecepient)
+        verifyRecepientsButton = customtkinter.CTkButton(self, width = 138, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Verify Users', hover_color=cc.lightPurple, command = self.validateRecepient)
         verifyRecepientsButton.place(x = 362, y = 588)
 
-        addPantryManagersButton = customtkinter.CTkButton(self, width = 138, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Add Employees', hover_color=lightPurple, command = self.employeeEntry)
+        addPantryManagersButton = customtkinter.CTkButton(self, width = 138, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Add Employees', hover_color=cc.lightPurple, command = self.employeeEntry)
         addPantryManagersButton.place(x = 525, y = 588)
 
-        itemsAndUnitsButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Items and Units', hover_color=lightPurple, command = self.itemsAndUnits)
+        itemsAndUnitsButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Items and Units', hover_color=cc.lightPurple, command = self.itemsAndUnits)
         itemsAndUnitsButton.place(x = 68, y = 588)
 
-        deliverFoodButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Deliver Food', hover_color=lightPurple, command = self.validateVouchers)
+        deliverFoodButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Deliver Food', hover_color=cc.lightPurple, command = self.validateVouchers)
         deliverFoodButton.place(x = 219, y = 588)
 
         listFrame = customtkinter.CTkScrollableFrame(self,width = 800, height = 390, fg_color='white', bg_color='white')
@@ -316,10 +316,10 @@ class ValidateRecepient(customtkinter.CTkFrame):
         self.priorityField = customtkinter.CTkComboBox(self, width=171, height=28, corner_radius=12,fg_color='white', border_width=1, border_color='gray', bg_color='white', values=priorities, variable=priorityVar)
         self.priorityField.place(x=452, y=520)        
 
-        approveButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Approve', hover_color=lightPurple, command = lambda : self.approve(priorityVar.get().upper()))
+        approveButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Approve', hover_color=cc.lightPurple, command = lambda : self.approve(priorityVar.get().upper()))
         approveButton.place(x = 306, y = 575)
 
-        rejectButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Reject', hover_color=lightPurple, command = self.reject)
+        rejectButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Reject', hover_color=cc.lightPurple, command = self.reject)
         rejectButton.place(x = 476, y = 575)
 
         self.iterateRecepients()
@@ -403,7 +403,7 @@ class VoucherList(customtkinter.CTkFrame):
 
         # STATUSES : PENDING, APPROVED, PROVIDED, REJECTED
 
-        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Exit', hover_color=lightPurple)
+        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple)
         exitButton.place(x = 385, y = 587)
 
         listFrame = customtkinter.CTkScrollableFrame(self,width = 781, height = 390, fg_color='white', bg_color='white')
@@ -563,20 +563,20 @@ class ValidateVoucher(customtkinter.CTkFrame):
                 i+=1
 
         if(voucherStatus == 'PENDING'):
-            rejectButton = customtkinter.CTkButton(self, width = 141, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Reject Voucher', hover_color=lightPurple, command = lambda voucherID = self.voucherID : self.changeVoucherStatus(voucherID,'REJECTED'))
+            rejectButton = customtkinter.CTkButton(self, width = 141, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Reject Voucher', hover_color=cc.lightPurple, command = lambda voucherID = self.voucherID : self.changeVoucherStatus(voucherID,'REJECTED'))
             rejectButton.place(x = 514, y = 582)
 
-            approveButton = customtkinter.CTkButton(self, width = 141, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Approve Voucher', hover_color=lightPurple, command = self.approve)
+            approveButton = customtkinter.CTkButton(self, width = 141, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Approve Voucher', hover_color=cc.lightPurple, command = self.approve)
             approveButton.place(x = 694, y = 582)
 
         elif(voucherStatus == 'PROVIDED' or voucherStatus == 'REJECTED'):
             pass
 
         elif(voucherStatus == 'APPROVED'):
-            provideButton = customtkinter.CTkButton(self, width = 141, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Provide Food', hover_color=lightPurple, command = lambda voucherID = self.voucherID : self.changeVoucherStatus(voucherID,'PROVIDED'))
+            provideButton = customtkinter.CTkButton(self, width = 141, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Provide Food', hover_color=cc.lightPurple, command = lambda voucherID = self.voucherID : self.changeVoucherStatus(voucherID,'PROVIDED'))
             provideButton.place(x = 694, y = 582)
 
-        exitButton = FrameLeave(self, width = 141, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Exit', hover_color=lightPurple)
+        exitButton = FrameLeave(self, width = 141, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple)
         exitButton.place(x = 154, y = 572)
 
     def approve(self):
@@ -703,16 +703,16 @@ class ItemDetails(customtkinter.CTkFrame):
 
         global PANTRY_ID
 
-        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Exit', hover_color=lightPurple)
+        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple)
         exitButton.place(x = 385, y = 587)
 
         listFrame = customtkinter.CTkScrollableFrame(self,width = 775, height = 390, fg_color='white', bg_color='white')
         listFrame.place(x = 57, y = 180)
 
-        addItems = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Add Items', hover_color=lightPurple, command = self.addItems)
+        addItems = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Add Items', hover_color=cc.lightPurple, command = self.addItems)
         addItems.place(x = 250, y = 587)
 
-        addBatches = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Add Item Batches', hover_color=lightPurple, command = self.addItemBatches)
+        addBatches = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Add Item Batches', hover_color=cc.lightPurple, command = self.addItemBatches)
         addBatches.place(x = 510, y = 587)
 
         mycursor.execute("SELECT * FROM item WHERE pantry_ID = %s", (PANTRY_ID,))
@@ -780,13 +780,13 @@ class AddItem(customtkinter.CTkFrame):
         self.stockLevel = customtkinter.CTkComboBox(self, width=171, height=28, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white', values = stockLevels, variable = self.stockLevelVar)
         self.stockLevel.place(x=632, y=345)
 
-        self.exitButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Exit', hover_color=lightPurple, command = self.exit)
+        self.exitButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple, command = self.exit)
         self.exitButton.place(x = 385, y = 587)
 
-        self.changeStockButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Change Stock', hover_color=lightPurple, command = self.changeItemStock)
+        self.changeStockButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Change Stock', hover_color=cc.lightPurple, command = self.changeItemStock)
         self.changeStockButton.place(x = 250, y = 587)
 
-        self.addItemButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Add Item', hover_color=lightPurple, command = self.addItem)
+        self.addItemButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Add Item', hover_color=cc.lightPurple, command = self.addItem)
         self.addItemButton.place(x = 515, y = 587)
 
     def exit(self):
@@ -873,13 +873,13 @@ class AddItemBatches(customtkinter.CTkFrame):
         self.batchNo1 = customtkinter.CTkEntry(self, width=171, height=28, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
         self.batchNo1.place(x=632, y=398)
 
-        self.exitButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Exit', hover_color=lightPurple, command = self.exit)
+        self.exitButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple, command = self.exit)
         self.exitButton.place(x = 385, y = 587)
 
-        self.changeStockButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Delete Batch', hover_color=lightPurple, command = self.deleteItemBatches)
+        self.changeStockButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Delete Batch', hover_color=cc.lightPurple, command = self.deleteItemBatches)
         self.changeStockButton.place(x = 250, y = 587)
 
-        self.addItemButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Add/Change Batch', hover_color=lightPurple, command = self.addBatch)
+        self.addItemButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Add/Change Batch', hover_color=cc.lightPurple, command = self.addBatch)
         self.addItemButton.place(x = 515, y = 587)
 
     def exit(self):
@@ -979,10 +979,10 @@ class EmployeeEntry(customtkinter.CTkFrame):
         self.repeatPasswordField = customtkinter.CTkEntry(self, width=171, height=28, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
         self.repeatPasswordField.place(x=669, y=268)
 
-        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Exit', hover_color=lightPurple)
+        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple)
         exitButton.place(x = 530, y = 400)
 
-        signUpButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Sign Up', hover_color=lightPurple, command = self.signUp)
+        signUpButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Sign Up', hover_color=cc.lightPurple, command = self.signUp)
         signUpButton.place(x = 702, y = 400)
 
     def signUp(self):
