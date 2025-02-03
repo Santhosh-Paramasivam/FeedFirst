@@ -22,8 +22,6 @@ class Error(customtkinter.CTkToplevel):
         errorFrame = customtkinter.CTkScrollableFrame(self, width = 390, height = 310, bg_color='white',fg_color='white')
         errorFrame.place(x = 50, y = 100)
 
-        # 190 442
-
         exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple)
         exitButton.place(x = 190, y = 445)
 

@@ -20,8 +20,8 @@ load_dotenv()
 
 mydb = mysql.connector.connect(
   host="localhost",
-  user=os.getenv("USERNAME"),
-  password=os.getenv("PASSWORD"),
+  user=os.getenv("FF_USERNAME"),
+  password=os.getenv("FF_PASSWORD"),
   database="FeedFirst"
 )
 

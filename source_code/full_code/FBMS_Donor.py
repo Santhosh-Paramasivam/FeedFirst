@@ -1,10 +1,7 @@
 import customtkinter
 from PIL import Image
 
-# COLOUR CONSTANTS ###############
-
-darkPurple = '#0C1765'
-lightPurple = '#505FC8'
+import constants.colour_constants as cc
 
 # SPECIAL CLASSES ################
 
@@ -105,9 +102,6 @@ class DonationRecord(customtkinter.CTkFrame):
         donationStatus = TextFrame(self, width = 161, height = 30, text = status)
         donationStatus.grid(row = 0, column = 3)
 
-    
-
-
 class FrameLeave(customtkinter.CTkButton):
 
     def __init__(self, master, width, height, corner_radius, border_width, bg_color, fg_color, hover_color, text_color, text):
@@ -168,16 +162,16 @@ class Login(customtkinter.CTkFrame):
         passwordField = customtkinter.CTkEntry(self, width=241, height=39, corner_radius=15, fg_color='white', border_width=1, border_color='gray', bg_color='white')
         passwordField.place(x=406, y=460)
 
-        logInButton = customtkinter.CTkButton(self, fg_color=darkPurple, text='Log In', width=120, height=42, text_color='white', corner_radius=20, bg_color='white', hover_color=lightPurple, command = self.login)
+        logInButton = customtkinter.CTkButton(self, fg_color=cc.darkPurple, text='Log In', width=120, height=42, text_color='white', corner_radius=20, bg_color='white', hover_color=cc.lightPurple, command = self.login)
         logInButton.place(x=95, y=543)
 
-        dropLocationButton = customtkinter.CTkButton(self, fg_color=darkPurple, text='Drop Off Locations',width=164, height=44, text_color='white', corner_radius=20, bg_color='white', hover_color=lightPurple, command = self.dropOffDetails)
+        dropLocationButton = customtkinter.CTkButton(self, fg_color=cc.darkPurple, text='Drop Off Locations',width=164, height=44, text_color='white', corner_radius=20, bg_color='white', hover_color=cc.lightPurple, command = self.dropOffDetails)
         dropLocationButton.place(x=245, y=542)
 
-        individualSUButton = customtkinter.CTkButton(self, fg_color=darkPurple, text='Individual Sign Up',width=164, height=44, text_color='white', corner_radius=20, bg_color='white', hover_color=lightPurple, command = self.signUpIndividual)
+        individualSUButton = customtkinter.CTkButton(self, fg_color=cc.darkPurple, text='Individual Sign Up',width=164, height=44, text_color='white', corner_radius=20, bg_color='white', hover_color=cc.lightPurple, command = self.signUpIndividual)
         individualSUButton.place(x=442, y=542)
 
-        organizationSUButton = customtkinter.CTkButton(self, fg_color=darkPurple, text='Organization Sign Up',width=164, height=44, text_color='white', corner_radius=20, bg_color='white', hover_color=lightPurple, command = self.signUpOrganization)
+        organizationSUButton = customtkinter.CTkButton(self, fg_color=cc.darkPurple, text='Organization Sign Up',width=164, height=44, text_color='white', corner_radius=20, bg_color='white', hover_color=cc.lightPurple, command = self.signUpOrganization)
         organizationSUButton.place(x=639, y=542)
 
     def signUpIndividual(self):
@@ -244,10 +238,10 @@ class SignUpIndividual(customtkinter.CTkFrame):
         repeatPasswordField = customtkinter.CTkEntry(self, width=171, height=28, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
         repeatPasswordField.place(x=669, y=268)
 
-        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Exit', hover_color=lightPurple)
+        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple)
         exitButton.place(x = 530, y = 400)
 
-        signUpButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Sign Up', hover_color=lightPurple)
+        signUpButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Sign Up', hover_color=cc.lightPurple)
         signUpButton.place(x = 702, y = 400)
 
 class SignUpOrganization(customtkinter.CTkFrame):
@@ -304,10 +298,10 @@ class SignUpOrganization(customtkinter.CTkFrame):
         repeatPasswordField = customtkinter.CTkEntry(self, width=171, height=28, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
         repeatPasswordField.place(x=670, y=456)
 
-        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Exit', hover_color=lightPurple)
+        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple)
         exitButton.place(x = 530, y = 580)
 
-        signUpButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Sign Up', hover_color=lightPurple)
+        signUpButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Sign Up', hover_color=cc.lightPurple)
         signUpButton.place(x = 702, y = 580)
 
 class DonationList(customtkinter.CTkFrame):
@@ -329,7 +323,7 @@ class DonationList(customtkinter.CTkFrame):
 
     def placeWidgets(self):
 
-        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Exit', hover_color=lightPurple)
+        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple)
         exitButton.place(x = 487, y = 587)
 
         listFrame = customtkinter.CTkScrollableFrame(self,width = 775, height = 390, fg_color='white', bg_color='white')
@@ -337,7 +331,7 @@ class DonationList(customtkinter.CTkFrame):
 
         items = [['Canned Beans',1],['Canned Beans',1],['Canned Beans',1],['Canned Beans',1],['Canned Beans',1],['Canned Beans',1],['Canned Beans',1],['Canned Beans',1],['Canned Beans',1]]
 
-        donateButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Donate', hover_color=lightPurple, command = self.donate)
+        donateButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Donate', hover_color=cc.lightPurple, command = self.donate)
         donateButton.place(x = 261, y = 588)
 
         d1 = DonationRecord(listFrame, "DON001", "12/07/2024","LOC001", items, "This is not a drill,This is not a drill,This is not a drill,This is not a drill,This is not a drill,This is not a drill,This is not a drill,This is not a drill,This is not a drill,This is not a drill,This is not a drill,This is not a drill,This is not a drill", "Pending")
@@ -402,13 +396,13 @@ class Donate(customtkinter.CTkFrame):
         descriptionField = customtkinter.CTkTextbox(self, width=232, height=180, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
         descriptionField.place(x=435, y=192)  
 
-        amountsAndUnitsButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Need and Units', hover_color=lightPurple, command = self.amountsAndUnits)
+        amountsAndUnitsButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Need and Units', hover_color=cc.lightPurple, command = self.amountsAndUnits)
         amountsAndUnitsButton.place(x = 201, y = 586)  
 
-        donateButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Donate', hover_color=lightPurple)
+        donateButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Donate', hover_color=cc.lightPurple)
         donateButton.place(x = 387, y = 586)      
 
-        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Exit', hover_color=lightPurple)
+        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple)
         exitButton.place(x = 563, y = 587)   
 
     def amountsAndUnits(self):
@@ -436,7 +430,7 @@ class DropOffDetails(customtkinter.CTkFrame):
 
     def placeWidgets(self):
 
-        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Exit', hover_color=lightPurple)
+        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple)
         exitButton.place(x = 385, y = 587)
 
         listFrame = customtkinter.CTkScrollableFrame(self,width = 775, height = 390, fg_color='white', bg_color='white')
@@ -471,7 +465,7 @@ class ItemDetails(customtkinter.CTkFrame):
 
     def placeWidgets(self):
 
-        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=darkPurple,text_color='white', text='Exit', hover_color=lightPurple)
+        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple)
         exitButton.place(x = 385, y = 587)
 
         listFrame = customtkinter.CTkScrollableFrame(self,width = 775, height = 390, fg_color='white', bg_color='white')
