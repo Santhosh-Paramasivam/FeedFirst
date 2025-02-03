@@ -1,8 +1,6 @@
 import customtkinter
 from PIL import Image
 
-from .frame_leave import FrameLeave
-
 import constants.colour_constants as cc
 
 class Error(customtkinter.CTkToplevel):
@@ -33,3 +31,23 @@ class Error(customtkinter.CTkToplevel):
         for error in errors: 
             customtkinter.CTkLabel(errorFrame, width = 390, height = 38, fg_color='white', text = error, anchor='center').grid(column = 0, row = i)
             i+=1
+
+class FrameLeave(customtkinter.CTkButton):
+
+    def __init__(self, master, width, height, corner_radius, border_width, bg_color, fg_color, hover_color, text_color, text):
+
+        self.master = master
+        customtkinter.CTkButton.__init__(self, master=master,
+                                         width=width,
+                                         height=height,
+                                         corner_radius=corner_radius,
+                                         border_width=border_width,
+                                         bg_color=bg_color,
+                                         fg_color=fg_color,
+                                         hover_color=hover_color,
+                                         text_color=text_color,
+                                         text=text,
+                                         command=self.press_destroy)
+
+    def press_destroy(self):
+        self.master.destroy()

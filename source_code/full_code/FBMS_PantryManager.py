@@ -2,8 +2,8 @@ import customtkinter
 from PIL import Image
 from datetime import date,datetime
 
-from utils.frame_leave import FrameLeave
-from utils.error_window import Error
+from utils.widgets import FrameLeave, Error
+from utils.functions import is_integer
 
 import mysql.connector
 
@@ -26,15 +26,6 @@ mydb = mysql.connector.connect(
 )
 
 mycursor = mydb.cursor()
-
-### FUNCTIONS ###########################
-
-def is_integer(s):
-    try:
-        int(s)
-        return True
-    except ValueError:
-        return False
 
 # GLOBAL VARIABLES ###############
 

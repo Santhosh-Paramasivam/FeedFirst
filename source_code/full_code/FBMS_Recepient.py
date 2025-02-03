@@ -6,8 +6,8 @@ import math
 import mysql.connector
 #port pymysql
 
-from utils.frame_leave import FrameLeave
-from utils.error_window import Error
+from utils.widgets import FrameLeave, Error
+from utils.functions import is_integer
 
 import constants.colour_constants as cc
 
@@ -29,15 +29,6 @@ mydb = mysql.connector.connect(
 )
 
 mycursor = mydb.cursor()
-
-### FUNCTIONS ###########################
-
-def is_integer(s):
-    try:
-        int(s)
-        return True
-    except ValueError:
-        return False
 
 ### FUNCTIONS TO SLIDE FRAME INTO VIEW ##
 
