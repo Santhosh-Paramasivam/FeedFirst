@@ -8,11 +8,15 @@ import mysql.connector
 from utils.widgets import FrameLeave, Error
 from utils.functions import is_integer
 
+from modules.pantryEntity import Pantry
+
 import constants.colour_constants as cc
 
 import os
 
 from dotenv import load_dotenv
+
+from modules.log_in import LogIn
 
 ### ENVIRONMENT VARIABLES ###############
 
@@ -29,49 +33,12 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
-### FUNCTIONS TO SLIDE FRAME INTO VIEW ##
-
-def slideUp(master, widget):
-
-    window_height = 675
-    end_x = 0
-    end_y = 0
-    speed = 27
-    ms = 10
-    y = end_y + window_height
-    end_y = end_y + 1
-
-    slideUpChild(master, widget, window_height, end_x, y, speed, end_y, ms)
-
-
-def slideUpChild(master, widget, window_height, end_x, y, speed, end_y, ms = 10):
-
-    if(int(y - 1) > int(end_y)):
-        change = speed * math.sin(((y - end_y)/(window_height)) * math.pi)
-        y-= change
-        widget.place(x = end_x, y = y)
-        master.after(ms, lambda : slideUpChild(master, widget, window_height, end_x, y, speed, end_y, ms))
-
-    else:
-        widget.place(x = end_x, y = end_y - 1)
-
 # USERNAME VARIABLE #######################
         
 global USERNAME
 global USER_RECEPIENT_ID
 
 # SPECIAL CLASSES #########################
-        
-class Pantry:
-
-    def __init__(self, id, name, firstAddress, secondAddress, thirdAddress, fourthAddress):
-
-        self.id = id
-        self.name = name
-        self.firstAddress = firstAddress
-        self.secondAddress = secondAddress
-        self.thirdAddress = thirdAddress
-        self.fourthAddress = fourthAddress
 
 class PantryRecord(customtkinter.CTkFrame):
 
@@ -112,256 +79,6 @@ class ItemAndUnitsRecord(customtkinter.CTkFrame):
         unitsLabel.place(x = 525, y = 7)   
 
 ### PAGE CLASSES #############################
-
-class LogIn(customtkinter.CTkFrame):
-
-    def __init__(self, master):
-
-        customtkinter.CTkFrame.__init__(self, master, width=900, height=675)
-
-        self.setBackground()
-        self.placeWidgets()
-
-    def placeWidgets(self):
-
-        self.usernameField = customtkinter.CTkEntry(self, width=241, height=39, corner_radius=15, fg_color='white', border_width=1, border_color='gray', bg_color='white')
-        self.usernameField.place(x=406, y=384)
-
-        self.passwordField = customtkinter.CTkEntry(self, width=241, height=39, corner_radius=15, fg_color='white', border_width=1, border_color='gray', bg_color='white')
-        self.passwordField.place(x=406, y=460)
-
-        logInButton = customtkinter.CTkButton(self, fg_color=cc.darkPurple, text='Log In', width=120, height=42, command=self.logIn, text_color='white', corner_radius=20, bg_color='white', hover_color=cc.lightPurple)
-        logInButton.place(x=213, y=544)
-
-        pantryDetailsButton = customtkinter.CTkButton(self, fg_color=cc.darkPurple, text='Pantry Details',width=120, height=42, command=self.pantryDetails, text_color='white', corner_radius=20, bg_color='white', hover_color=cc.lightPurple)
-        pantryDetailsButton.place(x=390, y=544)
-
-        signupButton = customtkinter.CTkButton(self, fg_color=cc.darkPurple, text='Sign Up', width=120, height=42, command=self.signup, text_color='white', corner_radius=20, bg_color='white', hover_color=cc.lightPurple)
-        signupButton.place(x=562, y=544)
-
-    def setBackground(self):
-
-        background_image = customtkinter.CTkImage(light_image=Image.open(r'images\Recepient\LoginPage.png'),
-                                                  dark_image=Image.open(r'images\Recepient\LoginPage.png'),
-                                                  size=(900, 675))
-        background_label = customtkinter.CTkLabel(self, image=background_image, text='')
-        background_label.pack()
-
-    def signup(self):
-        
-        signup = SignUp(self)
-        signup.place(x=0, y=0)
-
-    def pantryDetails(self):
-
-        pantryDetails = PantryDetails(self)
-        pantryDetails.place(x = 0, y = 0)
-
-    def logIn(self):
-
-        global USERNAME
-        global USER_RECEPIENT_ID
-
-        username = self.usernameField.get()
-        password = self.passwordField.get()
-
-        mycursor.execute("""SELECT * 
-                         FROM Recepients 
-                         WHERE status = 'VALID' """)
-        
-        users = mycursor.fetchall()
-
-        present = False
-        for row in users:
-            if(username == row[5] and password == row[6]): present = True
-
-        errors = []
-
-        if(present == False):
-            errors.append("Username or Password Invalid")
-            Error(self,errors)
-            return
-        else:
-            USERNAME = username
-
-            sql = "SELECT recepient_id FROM recepients WHERE username = %s"
-        
-            mycursor.execute(sql,(USERNAME,))
-            value = mycursor.fetchall()
-            USER_RECEPIENT_ID = value[0][0]
-
-        mydb.commit()
-
-        foodVoucher = FoodVoucher(self)
-        foodVoucher.place(x = 0, y = 0)
-
-class PantryDetails(customtkinter.CTkFrame):
-
-    def __init__(self, master):
-
-        customtkinter.CTkFrame.__init__(self, master, width=900, height=675)
-    
-        self.setBackground()
-        self.placeWidgets()
-
-    def setBackground(self):
-
-        background_image = customtkinter.CTkImage(light_image=Image.open(r'images\Recepient\PantryDetailsPage.png'),
-                                                  dark_image=Image.open(r'images\Recepient\PantryDetailsPage.png'),
-                                                  size=(900, 675))
-        
-        background_label = customtkinter.CTkLabel(self, image=background_image, text='')
-        background_label.pack()
-
-    def placeWidgets(self):
-
-        exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple)
-        exitButton.place(x = 385, y = 587)
-
-        listFrame = customtkinter.CTkScrollableFrame(self,width = 775, height = 390, fg_color='white', bg_color='white')
-        listFrame.place(x = 57, y = 180)
-
-        mycursor.execute("SELECT * FROM Pantries")
-        pantries = mycursor.fetchall()
-
-        i = 0
-        for row in pantries:
-            PantryRecord(listFrame, row[0], row[1], row[2]).grid(column = 0, row = i)
-            i+=1
-
-        mydb.commit()
-
-class SignUp(customtkinter.CTkFrame):
-
-    def __init__(self, master):
-
-        customtkinter.CTkFrame.__init__(self, master, width=900, height=675)
-
-        self.setBackground()
-        self.placeWidgets()
-
-    def placeWidgets(self):
-
-        self.nameField = customtkinter.CTkEntry(self, width=171, height=28, corner_radius=12,fg_color='white', border_width=1, border_color='gray', bg_color='white')
-        self.nameField.place(x=219, y=161)
-
-        self.pnumberField = customtkinter.CTkEntry(self, width=171, height=28, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
-        self.pnumberField.place(x=219, y=220)
-
-        self.addressField = customtkinter.CTkTextbox(self, width=171, height=106, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
-        self.addressField.place(x=219, y=290)
-
-        self.houseSizeField = customtkinter.CTkEntry(self, width=171, height=28, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
-        self.houseSizeField.place(x=219, y=432)
-
-        self.dietaryNeedsField = customtkinter.CTkTextbox(self, width=171, height=74, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
-        self.dietaryNeedsField.place(x=219, y=489)
-
-        self.emailField = customtkinter.CTkEntry(self, width=171, height=28, corner_radius=12,fg_color='white', border_width=1, border_color='gray', bg_color='white')
-        self.emailField.place(x=219, y=588)
-
-        self.houseRecepientsField = customtkinter.CTkEntry(self, width=171, height=28, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
-        self.houseRecepientsField.place(x=676, y=162)
-
-        self.rationNumberField = customtkinter.CTkEntry(self, width=171, height=28, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
-        self.rationNumberField.place(x=676, y=258)
-
-        self.usernameField = customtkinter.CTkEntry(self, width=171, height=28, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
-        self.usernameField.place(x=676, y=316)
-
-        self.passwordField = customtkinter.CTkEntry(self, width=171, height=28, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
-        self.passwordField.place(x=676, y=371)
-
-        self.passRepeatField = customtkinter.CTkEntry(self, width=171, height=28, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
-        self.passRepeatField.place(x=676, y=426)
-
-        self.pantryIDField = customtkinter.CTkEntry(self, width=171, height=28, corner_radius=12, fg_color='white', border_width=1, border_color='gray', bg_color='white')
-        self.pantryIDField.place(x=676, y=472)
-
-        self.exitButton = FrameLeave(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Exit', hover_color=cc.lightPurple)
-        self.exitButton.place(x = 530, y = 580)
-
-        self.submitButton = customtkinter.CTkButton(self, width = 120, height = 42, corner_radius=20, border_width=0, bg_color='white', fg_color=cc.darkPurple,text_color='white', text='Submit', hover_color=cc.lightPurple, command = self.submit)
-        self.submitButton.place(x = 702, y = 580)
-
-    def setBackground(self):
-
-        background_image = customtkinter.CTkImage(light_image=Image.open(r'images\Recepient\SignUpPage.png'),
-                                                  dark_image=Image.open(r'images\Recepient\SignUpPage.png'),
-                                                  size=(900, 675))
-        
-        background_label = customtkinter.CTkLabel(self, image=background_image, text='')
-        background_label.pack()
-
-    def submit(self):
-
-        errors = []
-
-        name = self.nameField.get()
-        pnumber = self.pnumberField.get()
-        address = self.addressField.get(1.0, "end-1c")
-        houseSize = self.houseSizeField.get()
-        houseRecepients = self.houseRecepientsField.get()
-        dietaryNeeds = self.dietaryNeedsField.get(1.0, "end-1c")
-        email = self.emailField.get()
-        rationNumber = self.rationNumberField.get()
-
-        username = self.usernameField.get()
-        password = self.passwordField.get()
-        repeatPassword = self.passRepeatField.get()
-        pantryID = self.pantryIDField.get()
-
-        if(name == '' or
-           pnumber == '' or
-           address == '' or
-           houseSize == '' or
-           houseRecepients == '' or
-           email == '' or
-           rationNumber == '' or
-           username == '' or
-           password == '' or
-           pantryID == ''): 
-            errors.append("All fields other than dietary needs are mandatory")
-
-        if(is_integer(pnumber) != True): errors.append("Phone number must be an integer")
-        if(is_integer(rationNumber) != True): errors.append("Ration number must be an integer")
-
-        if(len(pnumber) != 10): errors.append("Phone number must be 10 digits")
-        if(len(rationNumber) != 10): errors.append("Ration number must be 10 digits")
-
-        if(is_integer(houseSize) != True): errors.append("Household size must be an integer")
-
-        if(password != repeatPassword): errors.append("Password and repeat password don't match")
-
-        mycursor.execute("SELECT username from recepients")
-        unavailableUsernames = mycursor.fetchall()
-
-        for unavailableUsername in unavailableUsernames:
-            if(unavailableUsername[0] == username):
-                errors.append("Unavailable Username")
-
-        mycursor.execute("SELECT * FROM Pantries")
-        pantries = mycursor.fetchall()
-
-        if(pantryID != ''):
-            present = False
-            for row in pantries:
-                if(row[0] == int(pantryID)):
-                    present = True
-            
-            if(present == False): errors.append("Invalid Pantry ID")
-
-        if(len(errors) > 0):
-            Error(self, errors)
-            return
-
-        sql = "INSERT INTO Recepients(phone_number,status,name,ration_card_number,username,password,household_member_names,email_ID,dietary_needs,household_size,pantry_ID,address) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        values = (pnumber,"PENDING",name,rationNumber,username,password,houseRecepients,email,dietaryNeeds,houseSize,pantryID,address)
-
-        mycursor.execute(sql, values)
-        mydb.commit()
-
-
 
 class FoodVoucher(customtkinter.CTkFrame):
 
