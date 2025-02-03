@@ -23,3 +23,9 @@ FeedFirst addresses these challenges by creating a centralized system that simpl
 - Register other food pantry voluteers
 - Verify and assign recepients a priority level
 - Store and process food vouchers requests  
+
+### Tech Stack
+
+- Python
+- MySQL relational database
+- Tkinter for GUI
