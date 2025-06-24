@@ -30,12 +30,12 @@ FeedFirst addresses these challenges by creating a centralized system that simpl
 - Verify and assign recepients a priority level
 - Store and process food vouchers requests  
 
-### Tech Stack
+## Tech Stack
 
 - Python
 - MySQL
 - Tkinter for GUI
 
-### Database Schema
+## Database Schema
 
 ![image](dbschema.png)
