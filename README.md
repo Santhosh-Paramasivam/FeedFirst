@@ -1,22 +1,28 @@
-# FeedFirst - An Intelligent Food Bank System
+# FeedFirst - Intelligent Food Bank Management System
 
 ## The Problem
 
-In many communities, access to food assistance can be inconsistent and difficult to navigate. Individuals in need often struggle to find local food pantries, manage limited resources, and navigate a cumbersome process to request aid. On the other side, food pantry managers face challenges in maintaining accurate inventory, tracking food voucher requests, and coordinating with volunteers. The lack of streamlined communication and real-time data between recipients and pantry managers can result in inefficiencies, stock shortages, and missed opportunities for people to get the help they need.
+- In many communities, access to food assistance is **inconsistent and difficult to navigate**.
 
-FeedFirst addresses these challenges by creating a centralized system that simplifies the process for both recipients and pantry managers, ensuring that no one in need is left without access to food.
+- On the other side, food pantry managers face challenges in maintaining accurate inventory and tracking food voucher requests.
 
-## FeedFirst offers a seamless way
+- The lack of streamlined communication between those concerned often results in,
+    - Food waste
+    - Stock shortages
+    - And missed opportunities for people to get the help they need.
 
-### for recepients to
+FeedFirst addresses these challenges by creating a centralized system that simplifies the process for both recipients and pantry managers, ensuring that **no one in need is left behind**.
+
+## FeedFirst offers a seamless way for
+
+### Recepients to
 
 - Check for local food pantries  
-- Register and Login
-- Check stock level for various items  
+- Check stock levels for various items  
 - Apply for food vouchers  
-- Show voucher record to pantry managers to acquire food
+- Redeem food vouchers for food at the respective pantries
 
-### for pantry managers to
+### Pantry managers to
 
 - View and manage pantry inventory
 - Maintain expiry dates and stock level
@@ -27,5 +33,6 @@ FeedFirst addresses these challenges by creating a centralized system that simpl
 ### Tech Stack
 
 - Python
-- MySQL relational database
+- MySQL
 - Tkinter for GUI
+
