@@ -1,9 +1,9 @@
 USE FeedFirst;
 
-SET FOREIGN_KEY_CHECKS = 0;  
+-- SET FOREIGN_KEY_CHECKS = 0;  
 
 CREATE TABLE Item (
-    item_ID INT auto_increment PRIMARY key,
+    item_ID INT AUTO_INCREMENT PRIMARY KEY,
     request_units_used VARCHAR(30),
     storage_units_used VARCHAR(30),
     current_stock VARCHAR(30),
@@ -12,7 +12,7 @@ CREATE TABLE Item (
 
 CREATE TABLE PantryItemBatches (
     item_ID INT,
-    batch_id INT auto_increment PRIMARY KEY,
+    batch_ID INT AUTO_INCREMENT PRIMARY KEY,
     batch_no INT,
     expiry_date DATE,
     quantity INT,
@@ -20,26 +20,26 @@ CREATE TABLE PantryItemBatches (
 );
 
 create table Pantries(
-	pantry_ID INT auto_increment primary key,
+	pantry_ID INT AUTO_INCREMENT PRIMARY KEY,
 	pantry_name VARCHAR(20),
 	pantry_address VARCHAR(120));
 
 create table PantryManager(
 	username VARCHAR(20),
 	password VARCHAR(20),
-	employee_ID INT auto_increment primary key,
+	employee_ID INT AUTO_INCREMENT PRIMARY KEY,
 	ration_card_number VARCHAR(10),
 	name VARCHAR(20),
 	phone_number VARCHAR(10),
-	email_id VARCHAR(50),
-	Address VARCHAR(150),
+	email_ID VARCHAR(50),
+	address VARCHAR(150),
 	pantry_ID INT,
-	foreign key(pantry_ID) references Pantries(pantry_ID)
+	FOREIGN KEY(pantry_ID) REFERENCES Pantries(pantry_ID)
 );
 
 -- FoodVouchers, PantryItemBatches, and Item must be connected to pantries
 create table Recepients(
-	recepient_ID INT auto_increment primary key,
+	recepient_ID INT AUTO_INCREMENT PRIMARY KEY,
 	phone_number INT,
 	name VARCHAR(20),
 	ration_card_number INT,
@@ -52,24 +52,21 @@ create table Recepients(
 	pantry_ID INT,
 	address VARCHAR(120),
 	priority VARCHAR(20),
-	foreign key(pantry_ID) references Pantries(pantry_ID)
+	FOREIGN KEY(pantry_ID) REFERENCES Pantries(pantry_ID)
 );
 
 create table FoodVouchers(
-	recepient_id INT,
-	foreign key(recepient_id) references Recepients(recepient_ID),
-	voucher_id INT auto_increment primary key, 
-	status VARCHAR(20));
+	recepient_ID INT,
+	FOREIGN KEY(recepient_ID) REFERENCES Recepients(recepient_ID),
+	voucher_ID INT AUTO_INCREMENT PRIMARY KEY, 
+	status VARCHAR(20)
+);
 
 CREATE TABLE RequestedItem (
     item_ID INT,
     FOREIGN KEY (item_ID) REFERENCES Item(item_ID),
     voucher_ID INT,
-    FOREIGN KEY (voucher_ID) REFERENCES FoodVouchers(voucher_id),
+    FOREIGN KEY (voucher_ID) REFERENCES FoodVouchers(voucher_ID),
     requested_quantity INT,
     provided_quantity INT
 );
-
-describe PantryItemBatches;
-
-show tables;
