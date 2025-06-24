@@ -36,3 +36,6 @@ FeedFirst addresses these challenges by creating a centralized system that simpl
 - MySQL
 - Tkinter for GUI
 
+### Database Schema
+
+![image](dbschema.png)

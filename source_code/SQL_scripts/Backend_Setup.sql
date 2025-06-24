@@ -38,8 +38,8 @@ create table PantryManager(
 );
 
 -- FoodVouchers, PantryItemBatches, and Item must be connected to pantries
-create table Recepients(
-	recepient_ID INT AUTO_INCREMENT PRIMARY KEY,
+create table Recipients(
+	recipient_ID INT AUTO_INCREMENT PRIMARY KEY,
 	phone_number INT,
 	name VARCHAR(20),
 	ration_card_number INT,
@@ -56,8 +56,8 @@ create table Recepients(
 );
 
 create table FoodVouchers(
-	recepient_ID INT,
-	FOREIGN KEY(recepient_ID) REFERENCES Recepients(recepient_ID),
+	recipient_ID INT,
+	FOREIGN KEY(recipient_ID) REFERENCES Recipients(recipient_ID),
 	voucher_ID INT AUTO_INCREMENT PRIMARY KEY, 
 	status VARCHAR(20)
 );
